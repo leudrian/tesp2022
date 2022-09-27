@@ -23,6 +23,7 @@
         "ts-node": "^10.9.1"
     },
     "scripts": {
+        "postinstall": "tsc",
         "start": "ts-node src/index.ts",
         "dev": "nodemon --watch 'src/' --exec 'ts-node ./src/index.ts' -e ts"
     }
