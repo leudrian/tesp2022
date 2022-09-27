@@ -3,6 +3,9 @@
     "version": "1.0.0",
     "main": "./src/index.ts",
     "license": "MIT",
+    "engines": {
+        "node": "18.x"
+    },
     "dependencies": {
         "@types/yup": "^0.32.0",
         "cors": "^2.8.5",
