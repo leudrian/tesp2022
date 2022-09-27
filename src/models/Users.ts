@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 export interface UserInteface {
-    _id: Number;
+    _id: String;
     name: String;
     username: String;
     email: String;

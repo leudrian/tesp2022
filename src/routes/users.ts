@@ -10,6 +10,6 @@ userRoutes.post('/new', UserController.create);
 userRoutes.put('/update', UserController.update);
 userRoutes.get('/list', UserController.index);
 userRoutes.post('/find', UserController.findOne);
-userRoutes.delete('/delete', UserController.delete);
+userRoutes.post('/delete', UserController.delete);
 
 export default userRoutes;
