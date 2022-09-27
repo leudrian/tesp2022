@@ -4,7 +4,7 @@
     "main": "./src/index.ts",
     "license": "MIT",
     "engines": {
-        "node": "18.x"
+        "node": "16.x"
     },
     "dependencies": {
         "@types/yup": "^0.32.0",
