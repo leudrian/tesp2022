@@ -1,20 +1,38 @@
 import { Request, Response } from 'express';
 import { User } from '../models/Users';
 import * as Yup from 'yup';
+
 // yarn add yup @types/yup
 const userSchema = Yup.object().shape({
     name: Yup.string().required(),
     email: Yup.string().email().required(),
-    cpf: Yup.string().required(),
+    username: Yup.string().required(),
+    phone: Yup.string().required(),
+
+    address: Yup.object({
+        street: Yup.string().required(),
+        suite: Yup.string().required(),
+        city: Yup.string().required(),
+        zipcode: Yup.string().required(),
+    }),
 });
 const deleteUserSchema = Yup.object().shape({
     email: Yup.string().email().required(),
 });
+
 export default {
     async create(request: Request, response: Response) {
-        const { name, email, cpf } = request.body;
+        const { name, email, username, phone, address } = request.body;
 
-        if (!(await userSchema.isValid({ name, email, cpf }))) {
+        if (
+            !(await userSchema.isValid({
+                name,
+                email,
+                username,
+                phone,
+                address,
+            }))
+        ) {
             return response
                 .status(401)
                 .json({ message: 'dados fornecidos incorretamente' });
@@ -22,7 +40,13 @@ export default {
 
         const existing = await User.findOne({ email });
         if (!existing) {
-            const user = await User.create({ name, email, cpf });
+            const user = await User.create({
+                name,
+                email,
+                username,
+                phone,
+                address,
+            });
             return response.status(200).json({
                 message: 'Usuario criado com sucesso',
                 user,
@@ -45,7 +69,7 @@ export default {
         return response.status(200).json(existing);
     },
     async update(request: Request, response: Response) {
-        const { name, email, cpf } = request.body;
+        const { name, email, username } = request.body;
 
         const user = await User.findOneAndUpdate(
             {
@@ -53,7 +77,7 @@ export default {
             },
             {
                 email,
-                cpf,
+                username,
             }
         );
         if (user) {
@@ -62,9 +86,9 @@ export default {
         return response.status(400).json({ message: 'usuario nao encontrado' });
     },
     async findOne(request: Request, response: Response) {
-        const { name, email, cpf } = request.body;
+        const { name, email, username } = request.body;
         const user = await User.find({
-            $or: [{ name: name }, { email: email }, { cpf: cpf }],
+            $or: [{ name: name }, { email: email }, { username: username }],
         });
         if (user) {
             return response.status(200).json(user);

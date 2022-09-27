@@ -1,15 +1,29 @@
 import mongoose, { Schema } from 'mongoose';
 export interface UserInteface {
-    _id: Schema.Types.ObjectId;
+    _id: Number;
     name: String;
+    username: String;
     email: String;
-    cpf: String;
+    address: {
+        street: String;
+        suite: String;
+        city: String;
+        zipcode: String;
+    };
+    phone: String;
 }
 const userSchema = new Schema(
     {
         name: String,
+        username: String,
         email: String,
-        cpf: String,
+        address: {
+            street: String,
+            suite: String,
+            city: String,
+            zipcode: String,
+        },
+        phone: String,
     },
     {
         timestamps: true,
