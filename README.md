@@ -34,10 +34,10 @@ Deverá conter os seguintes métodos: `criar`, `listar`, `buscar` e `deletar`
 
 # 5 - Crie novas rotas
 
-| Método | Caminho       | Descrição | 
-|--------+---------------+-----------|
-| POST   | '/produto/new'| Novo produto | 
-| GET   | '/produto/list'| listar produtos | 
-| GET   | '/produto/list/:id'| buscar um produto com id | 
-| POST  | 'produto/del/:id' | deletar produto com id | 
+| Método | Caminho            | Descrição                | 
+|--------|--------------------|--------------------------|
+| POST   | '/produto/new'     | Novo produto             | 
+| GET    | '/produto/list'    | listar produtos          | 
+| GET    | '/produto/list/:id'| buscar um produto com id | 
+| POST   | 'produto/del/:id'  | deletar produto com id   | 
 
