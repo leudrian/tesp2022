@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-export interface UserInteface {
+export interface ProdutoInteface {
     nome: string,
     descricao: string,
     quantidadeEstoque: number,
@@ -8,7 +8,7 @@ export interface UserInteface {
     precoPromoAtivado: boolean,
     tipo: string
 }
-const userSchemaCardapio = new Schema(
+const produtoSchema = new Schema(
     {
     nome: String,
     descricao: String,
@@ -22,6 +22,6 @@ const userSchemaCardapio = new Schema(
         timestamps: true,
     }
 );
-export const User = mongoose.model('User', userSchemaCardapio, 'users');
+export const User = mongoose.model('User', produtoSchema, 'users');
 {
 }
