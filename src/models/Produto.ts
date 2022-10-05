@@ -22,6 +22,6 @@ const produtoSchema = new Schema(
         timestamps: true,
     }
 );
-export const User = mongoose.model('User', produtoSchema, 'users');
+export const Produto = mongoose.model('Produto', produtoSchema, 'produtos');
 {
 }

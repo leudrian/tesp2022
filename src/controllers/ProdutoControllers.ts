@@ -32,7 +32,7 @@ export default {
                 .json({ message: 'Dados fornecidos incorretamente'});
         }
 
-        const existing = await Produto.findeOne({ nome });
+        const existing = await Produto.findOne({ nome });
         if (!existing) {
             const produto = await Produto.create({
                 nome,
@@ -58,5 +58,14 @@ export default {
         }
         return response.status(200).json(existing);
     },
-    
+    async findOne(request: Request, response: Response) {
+        const { nome, quantidadeEstoque } = request.body;
+        const produto = await Produto.find({
+            $or: [{nome: nome}, {quantidadeEstoque: quantidadeEstoque}]
+        });
+        if (produto){
+            return response.status(200).json(produto);
+        }
+        return response.status(400).json({message: 'produto não encontrado'})
+    }
 }
