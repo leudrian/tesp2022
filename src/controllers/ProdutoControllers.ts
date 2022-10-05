@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { User } from '../models/Users';
+import { Produto } from '../models/Produto';
 import * as Yup from 'yup';
 
 const produtoSchema = Yup.object().shape({
@@ -48,5 +48,15 @@ export default {
                 produto,
             })
         }
-    }
+    },
+    async index(request: Request, response: Response) {
+        const existing = await Produto.find();
+        if(!existing) {
+            return response
+            .status(401)
+            .json({message: 'Nenhum produto encontrado'})
+        }
+        return response.status(200).json(existing);
+    },
+    
 }
