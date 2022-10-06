@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Produto } from '../models/Produto';
 import * as Yup from 'yup';
+import { NOMEM } from 'dns';
 
 const produtoSchema = Yup.object().shape({
     nome: Yup.string().required(),
@@ -12,8 +13,12 @@ const produtoSchema = Yup.object().shape({
     tipo: Yup.string().required()
 });
 
+const deleteProdutoSchema = Yup.object().shape({
+    nome: Yup.string().nome().required(),
+})
+
 export default {
-    async create(request: Request, response: Response){
+    async criar(request: Request, response: Response){
         const{ nome, descricao, quantidadeEstoque, preco, precoPromocional, precoPromoAtivado, tipo} = request.body;
 
         if (
@@ -49,7 +54,7 @@ export default {
             })
         }
     },
-    async index(request: Request, response: Response) {
+    async indice(request: Request, response: Response) {
         const existing = await Produto.find();
         if(!existing) {
             return response
@@ -58,7 +63,7 @@ export default {
         }
         return response.status(200).json(existing);
     },
-    async findOne(request: Request, response: Response) {
+    async buscar(request: Request, response: Response) {
         const { nome, quantidadeEstoque } = request.body;
         const produto = await Produto.find({
             $or: [{nome: nome}, {quantidadeEstoque: quantidadeEstoque}]
@@ -67,5 +72,21 @@ export default {
             return response.status(200).json(produto);
         }
         return response.status(400).json({message: 'produto não encontrado'})
+    },
+    async deletar(request: Request, response: Response) {
+        const { nome } = request.body;
+
+        if (!(await deleteProdutoSchema.isValid({nome}))) {
+            return response.status(401).json({ message: 'nome invalido'});
+        }
+        const resultado = await Produto.findOneAndDelete({ nome });
+        if (resultado) {
+            return response
+                .status(200)
+                .json({message: 'produto removido com sucesso'})
+        }
+        return response.status(400).json({ message: 'falha na remoção do produto'})
     }
 }
+
+
